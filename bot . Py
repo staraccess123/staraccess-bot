@@ -1,0 +1,25 @@
+import logging
+from telegram import Update, Bot
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+TOKEN = "8084310003:AAHc8DOzHID7qat_GySraKm-E8pd1e_OSCk"
+CHANNEL_LINK = "https://t.me/+mUplWOzJ10c2Mzcx"
+
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    args = context.args
+
+    if args and args[0] == "paid":
+        await update.message.reply_text(f"✅ Payment confirmed!\nHere’s your private access:\n{CHANNEL_LINK}")
+    else:
+        await update.message.reply_text(
+            "👋 Welcome to Star Access!\n\nTo join the private group, you need to make a payment.\n\nClick here to pay:\n👉 https://whop.com/backstage-vault-x/starfanshub-36/"
+        )
+
+app = ApplicationBuilder().token(TOKEN).build()
+app.add_handler(CommandHandler("start", start))
+
+if __name__ == "__main__":
+    app.run_polling()
